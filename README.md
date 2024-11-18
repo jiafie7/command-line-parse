@@ -40,30 +40,42 @@ int main(int argc, char* argv[])
 {
     CommandLineParser parser;
 
-    parser.add("name", Option::OPT_REQUIRED);  // Required parameter
-    parser.add("age", Option::OPT_OPTIONAL);  // Optional parameter
+    parser.add("name", CommandLineParser::ARG_REQUIRED);
+    parser.add("age", CommandLineParser::ARG_OPTIONAL);
+    parser.add("status", CommandLineParser::ARG_OPTIONAL);
 
     parser.parse(argc, argv);
 
-    std::string name = parser.get_string("name");
-    int age = parser.get_int("age");
-    bool status = parser.get_bool("status");
+    std::cout << std::boolalpha;
+    bool name = parser.get_bool("name");
+    std::cout << "Name = " << name << '\n';
+    std::cout << std::noboolalpha;
 
-    std::cout << "Name: " << name << ", Age: " << age << ", Status: " << status << '\n';
+    int age = parser.get_int("age");
+    std::cout << "Age = " << age << '\n';
+
+    std::string status = parser.get_string("status");
+    std::cout << "Status = " << status << '\n';
+
     return 0;
 }
 ```
 
 2. Run the Example
 
+- For long arguments, the optional argument only recognizes `--name=Alice`, and the required argument recognizes the `--name=Alice` or `--name Alice`.
+- For short arguments, the optional argument only recognizes `-nAlice`, and the required argument only recognizes the `-n Alice`
+
 ```bash
-./main --name Alice --age 25 --status true
+./main --name Alice --age=25 --status=true
 ```
 
 3. Output
 
 ```bash
-Name: Alice, Age: 25, Status: true
+Name: Alice
+Age: 25
+Status: true
 ```
 
 ## API Reference
