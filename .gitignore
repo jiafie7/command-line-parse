@@ -1,0 +1,35 @@
+# Ignore build directories
+build/
+out/
+bin/
+lib/
+obj/
+
+# Ignore CMake generated files
+CMakeFiles/
+/CMakeCache.txt
+/cmake_install.cmake
+/Makefile
+
+# Ignore project-specific generated files
+compile_commands.json
+CTestTestfile.cmake
+Testing/
+
+# Ignore log files and temporary files
+*.log
+*.tmp
+*.temp
+
+# Ignore OS-specific files
+.DS_Store           # macOS
+Thumbs.db           # Windows
+*.swp               # Vim swap files
+*.swo               # Vim swap files
+*.swn               # Vim backup files
+
+# Ignore editor and IDE specific files
+.idea/              # CLion, WebStorm, PhpStorm
+.vscode/            # Visual Studio Code
+*.code-workspace    # Visual Studio Code workspace
+*.iml               # IntelliJ-based IDEs
