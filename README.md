@@ -32,7 +32,7 @@ make
 
 ```c++
 #include <iostream>
-#include "utility/option.h"
+#include "utility/command-line-parser.h"
 
 using namespace melon::utility;
 
@@ -40,11 +40,10 @@ int main(int argc, char* argv[])
 {
     CommandLineParser parser;
 
-    parser.addOption("name", Option::OPT_REQUIRED);  // Required parameter
-    parser.addOption("age", Option::OPT_OPTIONAL);  // Optional parameter
+    parser.add("name", Option::OPT_REQUIRED);  // Required parameter
+    parser.add("age", Option::OPT_OPTIONAL);  // Optional parameter
 
     parser.parse(argc, argv);
-
 
     std::string name = parser.get_string("name");
     int age = parser.get_int("age");
