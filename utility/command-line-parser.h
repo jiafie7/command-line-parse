@@ -1,6 +1,7 @@
 #pragma once
 
 #include <map>
+#include "utility/value.h"
 
 namespace melon
 {
@@ -27,9 +28,10 @@ namespace melon
         void show() const;
 
         bool has(const std::string& arg) const;
-        bool get_bool(const std::string& arg);
-        int get_int(const std::string& arg);
-        std::string get_string(const std::string& arg);
+        // bool get_bool(const std::string& arg);
+        // int get_int(const std::string& arg);
+        // std::string get_string(const std::string& arg);
+        Value get(const std::string& arg);
 
 
 

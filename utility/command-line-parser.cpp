@@ -129,32 +129,48 @@ bool CommandLineParser::has(const std::string& arg) const
       && m_args.find(arg) != m_args.end();
 }
         
-bool CommandLineParser::get_bool(const std::string& arg)
+// bool CommandLineParser::get_bool(const std::string& arg)
+// {
+//   if (!has(arg))
+//     throw std::logic_error("Argument is not exist");
+//
+//   return m_args[arg] == "true" ? true : false;
+// }
+//         
+// int CommandLineParser::get_int(const std::string& arg)
+// {
+//   if (!has(arg))
+//     throw std::logic_error("Argument is not exist");
+//
+//   std::stringstream ss;
+//   ss << m_args[arg];
+//
+//   int value = 0;
+//   ss >> value;
+//   return value;
+// }
+//         
+// std::string CommandLineParser::get_string(const std::string& arg)
+// {
+//   if (!has(arg))
+//     throw std::logic_error("Argument is not exist");
+//
+//   return m_args[arg];
+// }
+
+Value CommandLineParser::get(const std::string& arg)
 {
   if (!has(arg))
-    throw std::logic_error("Argument is not exist");
+    return Value("");
 
-  return m_args[arg] == "true" ? true : false;
+  switch (m_types[arg])
+  {
+    case ARG_NO:
+    case ARG_OPTIONAL:
+    case ARG_REQUIRED:
+      return Value(m_args[arg]);
+    default: break;
+  }
+
+  return Value("");
 }
-        
-int CommandLineParser::get_int(const std::string& arg)
-{
-  if (!has(arg))
-    throw std::logic_error("Argument is not exist");
-
-  std::stringstream ss;
-  ss << m_args[arg];
-
-  int value = 0;
-  ss >> value;
-  return value;
-}
-        
-std::string CommandLineParser::get_string(const std::string& arg)
-{
-  if (!has(arg))
-    throw std::logic_error("Argument is not exist");
-
-  return m_args[arg];
-}
-

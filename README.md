@@ -33,6 +33,7 @@ make
 ```c++
 #include <iostream>
 #include "utility/command-line-parser.h"
+#include "utility/value.h"
 
 using namespace melon::utility;
 
@@ -43,19 +44,31 @@ int main(int argc, char* argv[])
     parser.add("name", CommandLineParser::ARG_REQUIRED);
     parser.add("age", CommandLineParser::ARG_OPTIONAL);
     parser.add("status", CommandLineParser::ARG_OPTIONAL);
+    parser.add("a", CommandLineParser::ARG_NO);
+    parser.add("b", CommandLineParser::ARG_REQUIRED);
+    parser.add("c", CommandLineParser::ARG_OPTIONAL);
 
     parser.parse(argc, argv);
 
-    std::cout << std::boolalpha;
-    bool name = parser.get_bool("name");
+    std::string name = parser.get("name");
     std::cout << "Name = " << name << '\n';
-    std::cout << std::noboolalpha;
 
-    int age = parser.get_int("age");
+    int age = parser.get("age");
     std::cout << "Age = " << age << '\n';
 
-    std::string status = parser.get_string("status");
+    bool status = parser.get("status");
+    std::cout << std::boolalpha;
     std::cout << "Status = " << status << '\n';
+    std::cout << std::noboolalpha;
+
+    std::string a = parser.get("a");
+    std::cout << "a = " << a << '\n';
+
+    std::string b = parser.get("b");
+    std::cout << "b = " << b << '\n';
+
+    int c = parser.get("c");
+    std::cout << "c = " << c << '\n';
 
     return 0;
 }
@@ -67,20 +80,23 @@ int main(int argc, char* argv[])
 - For short arguments, the optional argument only recognizes `-nAlice`, and the required argument only recognizes the `-n Alice`
 
 ```bash
-./main --name Alice --age=25 --status=true
+./main --name Alice --age=25 --status=true -a -b test -c123
 ```
 
 3. Output
 
 ```bash
-Name: Alice
-Age: 25
-Status: true
+Name = Alice
+Age = 25
+Status = true
+a =
+b = test
+c = 123
 ```
 
 ## API Reference
 
-1. void add(const std::string& opt, Type type)
+1. void add(const std::string& arg, ArgType type)
 
 Description: Adds a command-line argument
 
@@ -91,18 +107,6 @@ Description: Adds a command-line argument
 
 Description: Parses the command-line arguments.
 
-3. bool has(const std::string& opt) const
+3. bool get_bool(const std::string& arg)
 
-Description: Indicates whether the argument is existed.
-
-4. bool get_bool(const std::string& opt)
-
-Description: Gets the value of boolean parameter type.
-
-5. int get_int(const std::string& opt)
-
-Description: Gets the value of integer parameter type.
-
-6. std::string get_string(const std::string& opt)
-
-Description: Gets the value of string parameter type.
+Description: Gets the value of arguments.
